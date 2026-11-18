@@ -52,3 +52,7 @@ $(call inherit-product, vendor/google/coral/coral-vendor.mk)
 
 # LunarisOS coral maintainer
 PRODUCT_SYSTEM_PROPERTIES += ro.lunaris.maintainer=Hecker
+
+# Experimental Android 16 hardware integration; prepare plugins before lunch.
+$(call inherit-product, vendor/hecker/floral/faceid/faceid.mk)
+$(call inherit-product, vendor/hecker/floral/motionsense/motionsense.mk)
