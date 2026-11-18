@@ -1,2 +1,4 @@
 # Oslo debug properties
-vendor_internal_prop(pixel_oslo_debug_prop)
+# Pixel Oslo properties are system_ext owned and read by the platform Oslo app.
+# Vendor Oslo consumers may read them, but vendor domains must not set them.
+system_restricted_prop(pixel_oslo_debug_prop)
