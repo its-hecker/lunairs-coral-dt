@@ -3,6 +3,11 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# Coral has the Google IR + Citadel-backed 3D Face HAL. Disable Lunaris'
+# software 2D FaceUnlock package before inheriting common_full_phone.mk;
+# it otherwise installs a second face provider and a competing enrollment UI.
+TARGET_FACE_UNLOCK_SUPPORTED := false
+
 # The signed Google Camera APK set replaces the AOSP/Lineage camera app.
 PRODUCT_NO_CAMERA := true
 
