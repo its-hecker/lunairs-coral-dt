@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Coral-specific hardware card values replace playful upstream placeholders.
+     DEVICE_PACKAGE_OVERLAYS from device-common.mk scopes these to Pixel 4 XL. -->
+<resources>
+    <string name="lunaris_device_message">Google Pixel 4 XL</string>
+    <string name="lunaris_processor_code_message">Qualcomm Snapdragon 855</string>
+    <string name="lunaris_battery_type_message">3,700 mAh</string>
+    <string name="lunaris_screen_message">6.3-inch QHD+ OLED (90 Hz)</string>
+</resources>
