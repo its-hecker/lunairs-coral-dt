@@ -53,8 +53,22 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 
 $(call inherit-product, vendor/google/coral/coral-vendor.mk)
 
+# Lunaris GMS/backup prebuilts installed to /system by shared vendor config.
+# Explicitly allow these inherited modules under generic_system.mk artifact checks.
+PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+    system/app/GoogleExtShared/GoogleExtShared.apk \
+    system/app/GooglePrintRecommendationService/GooglePrintRecommendationService.apk \
+    system/etc/permissions/privapp-permissions-appbackup.xml \
+    system/etc/permissions/privapp-permissions-google.xml \
+    system/etc/permissions/privapp_allowlist_com.google.android.ext.services.xml \
+    system/lib/libtensorflowlite_jni.so \
+    system/lib64/libtensorflowlite_gpu_jni.so \
+    system/lib64/libtensorflowlite_jni.so \
+    system/priv-app/AppDataBackup/AppDataBackup.apk \
+    system/priv-app/GoogleExtServices/GoogleExtServices.apk
+
 # LunarisOS coral maintainer
-PRODUCT_SYSTEM_PROPERTIES += ro.lunaris.maintainer=Hecker
+PRODUCT_PRODUCT_PROPERTIES += ro.lunaris.maintainer=Hecker
 
 # Original Google-signed Camera with matching Pixel 4 XL feature splits.
 $(call inherit-product, device/google/coral/camera/camera.mk)
