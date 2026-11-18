@@ -1,0 +1,1 @@
+LineageOS android_device_google_coral lineage-23.2 source SHA: daf43120b62106607878a2d2f0709f902e6c21dd
