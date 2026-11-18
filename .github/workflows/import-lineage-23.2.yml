@@ -30,4 +30,4 @@ jobs:
           git add LUNARIS_UPSTREAM.txt
           git commit -m "Import LineageOS 23.2 coral device tree for LunarisOS"
           git remote add target "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push target HEAD:refs/heads/lunaris-16.2
+          git push --force-with-lease=refs/heads/lunaris-16.2:f40332f9215bbf95b20a5a89fdefabe2c017efb8 target HEAD:refs/heads/lunaris-16.2
