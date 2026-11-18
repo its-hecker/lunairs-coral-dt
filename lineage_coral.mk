@@ -70,6 +70,9 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
 # LunarisOS coral maintainer
 PRODUCT_PRODUCT_PROPERTIES += ro.lunaris.maintainer=Hecker
 
+# Temporary debug-build USB ADB for bootloop diagnostics; user builds stay secured.
+include device/google/coral/debug/lunaris_development_adb.mk
+
 # Original Google-signed Camera with matching Pixel 4 XL feature splits.
 $(call inherit-product, device/google/coral/camera/camera.mk)
 
