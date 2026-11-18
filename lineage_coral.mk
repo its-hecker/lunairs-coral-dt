@@ -49,3 +49,6 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     DeviceProduct=coral
 
 $(call inherit-product, vendor/google/coral/coral-vendor.mk)
+
+# LunarisOS coral maintainer
+PRODUCT_SYSTEM_PROPERTIES += ro.lunaris.maintainer=Hecker
