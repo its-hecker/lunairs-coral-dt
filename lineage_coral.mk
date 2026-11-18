@@ -3,6 +3,9 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# The signed Google Camera APK set replaces the AOSP/Lineage camera app.
+PRODUCT_NO_CAMERA := true
+
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
@@ -53,6 +56,9 @@ $(call inherit-product, vendor/google/coral/coral-vendor.mk)
 # LunarisOS coral maintainer
 PRODUCT_SYSTEM_PROPERTIES += ro.lunaris.maintainer=Hecker
 
-# Experimental Android 16 hardware integration; prepare plugins before lunch.
+# Original Google-signed Camera with matching Pixel 4 XL feature splits.
+$(call inherit-product, device/google/coral/camera/camera.mk)
+
+# Android 16 FaceAuth and Oslo plugins; prepare before lunch.
 $(call inherit-product, vendor/hecker/floral/faceid/faceid.mk)
 $(call inherit-product, vendor/hecker/floral/motionsense/motionsense.mk)
