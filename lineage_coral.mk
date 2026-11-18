@@ -61,4 +61,6 @@ $(call inherit-product, device/google/coral/camera/camera.mk)
 
 # Android 16 FaceAuth and Oslo plugins; prepare before lunch.
 $(call inherit-product, vendor/hecker/floral/faceid/faceid.mk)
+# Keep stock Soli gesture gating except for the region allowlist (e.g. Pakistan).
+FLORAL_MOTION_COUNTRY_OVERRIDE := true
 $(call inherit-product, vendor/hecker/floral/motionsense/motionsense.mk)
