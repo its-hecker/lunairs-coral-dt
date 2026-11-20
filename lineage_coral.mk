@@ -1,0 +1,88 @@
+#
+# SPDX-FileCopyrightText: The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Coral has the Google IR + Citadel-backed 3D Face HAL. Disable Lunaris'
+# software 2D FaceUnlock package before inheriting common_full_phone.mk;
+# it otherwise installs a second face provider and a competing enrollment UI.
+TARGET_FACE_UNLOCK_SUPPORTED := false
+
+# The signed Google Camera APK set replaces the AOSP/Lineage camera app.
+PRODUCT_NO_CAMERA := true
+
+# Inherit some common Lineage stuff.
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+
+#
+# All components inherited here go to system image
+#
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/generic_system.mk)
+
+# Enable mainline checking
+PRODUCT_ENFORCE_ARTIFACT_PATH_REQUIREMENTS := relaxed
+
+#
+# All components inherited here go to system_ext image
+#
+$(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_system_ext.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_system_ext.mk)
+
+#
+# All components inherited here go to product image
+#
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_product.mk)
+
+#
+# All components inherited here go to vendor image
+#
+# TODO(b/136525499): move *_vendor.mk into the vendor makefile later
+TARGET_SUPPORTS_OMX_SERVICE := false
+$(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_vendor.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_vendor.mk)
+
+include device/google/coral/coral/device.mk
+
+# Device identifier. This must come after all inclusions
+PRODUCT_BRAND := google
+PRODUCT_DEVICE := coral
+PRODUCT_MANUFACTURER := Google
+PRODUCT_MODEL := Pixel 4 XL
+PRODUCT_NAME := lineage_coral
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    BuildDesc="coral-user 13 TP1A.221005.002.B2 9382335 release-keys" \
+    BuildFingerprint=google/coral/coral:13/TP1A.221005.002.B2/9382335:user/release-keys \
+    DeviceProduct=coral
+
+$(call inherit-product, vendor/google/coral/coral-vendor.mk)
+
+# Lunaris GMS/backup prebuilts installed to /system by shared vendor config.
+# Explicitly allow these inherited modules under generic_system.mk artifact checks.
+PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+    system/app/GoogleExtShared/GoogleExtShared.apk \
+    system/app/GooglePrintRecommendationService/GooglePrintRecommendationService.apk \
+    system/etc/permissions/privapp-permissions-appbackup.xml \
+    system/etc/permissions/privapp-permissions-google.xml \
+    system/etc/permissions/privapp_allowlist_com.google.android.ext.services.xml \
+    system/lib/libtensorflowlite_jni.so \
+    system/lib64/libtensorflowlite_gpu_jni.so \
+    system/lib64/libtensorflowlite_jni.so \
+    system/priv-app/AppDataBackup/AppDataBackup.apk \
+    system/priv-app/GoogleExtServices/GoogleExtServices.apk
+
+# LunarisOS coral maintainer
+PRODUCT_PRODUCT_PROPERTIES += ro.lunaris.maintainer=Hecker
+
+# Temporary debug-build USB ADB for bootloop diagnostics; user builds stay secured.
+include device/google/coral/debug/lunaris_development_adb.mk
+
+# Original Google-signed Camera with matching Pixel 4 XL feature splits.
+$(call inherit-product, device/google/coral/camera/camera.mk)
+
+# Android 16 FaceAuth and Oslo plugins; prepare before lunch.
+$(call inherit-product, vendor/hecker/floral/faceid/faceid.mk)
+# Keep stock Soli gesture gating except for the region allowlist (e.g. Pakistan).
+FLORAL_MOTION_COUNTRY_OVERRIDE := true
+$(call inherit-product, vendor/hecker/floral/motionsense/motionsense.mk)
